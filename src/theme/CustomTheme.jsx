@@ -4,7 +4,7 @@ const lightTheme = createTheme({
   palette: {
     mode: 'light',
     primary: {
-      main: '#f39d12', // Andromeda primary color
+      main: '#0fb59c', // Andromeda primary color
     },
     secondary: {
       main: '#f39d12', // Andromeda secondary color
