@@ -25,7 +25,7 @@ const projects = [
     title: 'Quantitative Finance Research',
     description: 'Short research papers on portfolio optimization and risk management.',
     icon: <School />,
-    link: ''
+    link: 'https://clovin4.github.io/research/'
   },
   {
     title: 'CI/CD with GitHub Actions',
