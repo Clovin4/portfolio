@@ -1,6 +1,6 @@
 import React from 'react';
 import { Container, Grid, Card, CardContent, CardActions, Button, Typography, Box } from '@mui/material';
-import { Build, BarChart, School, Work, Code, ShowChart, BubbleChart, Timeline } from '@mui/icons-material';
+import { Build, BarChart, School, Code, ShowChart, BubbleChart, Timeline } from '@mui/icons-material';
 
 const projects = [
   {
@@ -10,14 +10,17 @@ const projects = [
     link: 'https://clovin4.github.io/quantstream/'
   },
   {
-    title: 'Fraud Detection Model',
-    description: 'A machine learning model to detect fraudulent transactions.',
+    title: 'Prefect Deployment on VPS (Digital Ocean)',
+    description: `
+      A docker compose deployment with reverse proxy and watchtower. Watchtower is used to update the containers automatically 
+      when a new image is available. The reverse proxy is used to route the requests to the correct container based on the domain name.
+    `,
     icon: <BubbleChart />,
-    link: ''
+    link: 'https://github.com/Clovin4/qv-prefect-server'
   },
   {
-    title: 'Machine Learning for Trading',
-    description: 'Using machine learning models to predict stock prices.',
+    title: 'Machine Learning',
+    description: 'Using random forest models to predict stock prices.',
     icon: <ShowChart />,
     link: ''
   },
@@ -29,9 +32,9 @@ const projects = [
   },
   {
     title: 'CI/CD with GitHub Actions',
-    description: 'Cheat sheet for setting up CI/CD workflows with GitHub Actions.',
+    description: 'CI/CD workflows with GitHub Actions.',
     icon: <Build />,
-    link: ''
+    link: ['https://github.com/Clovin4/quantstream/tree/main/.github', 'https://github.com/Clovin4/qv-terraform/tree/main/.github/workflows'] // An example with two links; update the URLs as needed.
   },
   {
     title: 'Docker for Data Science',
@@ -76,16 +79,32 @@ const Portfolio = () => {
                 </Typography>
               </CardContent>
               <CardActions>
-                <Button 
-                size="small" 
-                color="primary"
-                content='a'
-                href={project.link}
-                target="_blank"
-                rel="noopener noreferrer"
-                >
-                  Learn More
-                </Button>
+                {Array.isArray(project.link) && project.link.length > 0 ? (
+                  project.link.map((url, i) => (
+                    url && (
+                      <Button
+                        key={i}
+                        size="small"
+                        color={i === 0 ? "primary" : "secondary"}
+                        href={url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        {i === 0 ? "Learn More" : "Learn More (but even more!)"}
+                      </Button>
+                    )
+                  ))
+                ) : project.link ? (
+                  <Button
+                    size="small"
+                    color="primary"
+                    href={project.link}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    Learn More
+                  </Button>
+                ) : null}
               </CardActions>
             </Card>
           </Grid>

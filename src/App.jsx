@@ -10,7 +10,7 @@ import Footer from './components/Footer';
 import { lightTheme, darkTheme } from './theme/CustomTheme'; // Import light and dark themes
 
 const App = () => {
-  const [isDarkMode, setIsDarkMode] = useState(false);
+  const [isDarkMode, setIsDarkMode] = useState(true);
 
   const toggleTheme = () => {
     setIsDarkMode((prevMode) => !prevMode);
