@@ -8,9 +8,10 @@ const About = () => {
     'AWS',
     'Airflow',
     'Docker',
+    "Kubernetes",
     'Terraform',
+    'Ansible',
     'PostgreSQL',
-    'Snowflake',
     'Grafana',
   ];
 

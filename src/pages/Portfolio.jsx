@@ -1,114 +1,273 @@
-import React from 'react';
-import { Container, Grid, Card, CardContent, CardActions, Button, Typography, Box } from '@mui/material';
-import { Build, BarChart, School, Code, ShowChart, BubbleChart, Timeline } from '@mui/icons-material';
-import AsciiHeader from '../components/ascii/AsciiHeader';
+import { useState } from 'react';
+import { Container, Box, Typography, useTheme, Chip, Stack } from '@mui/material';
+import { GitHub, OpenInNew } from '@mui/icons-material';
 
 const projects = [
   {
-    title: 'Quantstream',
-    description: 'A financial data analysis tool built with an Xarray data structure.',
-    icon: <BarChart />,
-    link: 'https://clovin4.github.io/quantstream/'
+    id: 'quantstream',
+    name: 'quantstream',
+    description: 'Financial data analysis library built on Xarray. Handles time series data with multi-dimensional indexing for quantitative workflows.',
+    tags: ['python', 'xarray', 'finance'],
+    github: 'https://github.com/Clovin4/quantstream',
+    demo: 'https://clovin4.github.io/quantstream/',
+    status: 'active',
   },
   {
-    title: 'Prefect Deployment on VPS (Digital Ocean)',
-    description: `
-      A docker compose deployment with reverse proxy and watchtower. Watchtower is used to update the containers automatically
-      when a new image is available. The reverse proxy is used to route the requests to the correct container based on the domain name.
-    `,
-    icon: <BubbleChart />,
-    link: 'https://github.com/Clovin4/qv-prefect-server'
+    id: 'aperture',
+    name: 'aperture',
+    description: 'A modern data orchestration platform for building and managing research data.',
+    tags: ['go', 'react', 'devops', 'platform-engineering'],
+    github: 'https://github.com/Clovin4/qv-prefect-server',
+    status: 'active',
   },
   {
-    title: 'Machine Learning',
-    description: 'Using random forest models to predict stock prices.',
-    icon: <ShowChart />,
-    link: ''
+    id: 'research',
+    name: 'research',
+    description: 'Short papers on portfolio optimization, risk management, and quantitative finance topics.',
+    tags: ['finance', 'research', 'python'],
+    demo: 'https://clovin4.github.io/research/',
+    status: 'active',
   },
   {
-    title: 'Quantitative Finance Research',
-    description: 'Short research papers on portfolio optimization and risk management.',
-    icon: <School />,
-    link: 'https://clovin4.github.io/research/'
+    id: 'secure-k8s',
+    name: 'secure-k8s',
+    description: 'A security-focused setup for Kubernetes the Hard Way. Includes VPC isolation, private networking, and hardened configurations.',
+    tags: ['kubernetes', 'security', 'devops'],
+    github: 'https://github.com/Clovin4/serverTest-do',
+    status: 'active',
   },
   {
-    title: 'CI/CD with GitHub Actions',
-    description: 'CI/CD workflows with GitHub Actions.',
-    icon: <Build />,
-    link: ['https://github.com/Clovin4/quantstream/tree/main/.github', 'https://github.com/Clovin4/qv-terraform/tree/main/.github/workflows']
-  },
-  {
-    title: 'Docker for Data Science',
-    description: 'Tutorial for using Docker in data science projects.',
-    icon: <Code />,
-    link: ''
-  },
-  {
-    title: 'Data Visualization with Plotly and Holoviews',
-    description: 'Examples for creating interactive data visualizations.',
-    icon: <BarChart />,
-    link: ''
-  },
-  {
-    title: 'LSTM for Time Series Forecasting',
-    description: 'Using LSTM neural networks for time series forecasting.',
-    icon: <Timeline />,
-    link: ''
-  },
+    id: 'portfolio',
+    name: 'portfolio',
+    description: 'This site. React + MUI with a terminal aesthetic.',
+    tags: ['react', 'vite', 'mui'],
+    github: 'https://github.com/Clovin4/portfolio',
+    status: 'active',
+  }
 ];
 
-const Portfolio = () => {
+const ProjectCard = ({ project, isSelected, onClick }) => {
+  const theme = useTheme();
+
   return (
-    <Container maxWidth="lg" sx={{ marginTop: 4 }}>
-      <AsciiHeader title="Portfolio" />
-      <Typography variant="body1" paragraph textAlign="center">
-        Warning: Some projects (and this page for that matter) are still in development. Stay tuned for updates!
+    <Box
+      onClick={onClick}
+      sx={{
+        p: 2,
+        cursor: 'pointer',
+        borderLeft: isSelected ? `3px solid ${theme.palette.primary.main}` : '3px solid transparent',
+        backgroundColor: isSelected
+          ? theme.palette.mode === 'dark' ? 'rgba(255,255,255,0.05)' : 'rgba(0,0,0,0.03)'
+          : 'transparent',
+        '&:hover': {
+          backgroundColor: theme.palette.mode === 'dark' ? 'rgba(255,255,255,0.08)' : 'rgba(0,0,0,0.05)',
+        },
+        transition: 'all 0.15s ease',
+      }}
+    >
+      <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, fontFamily: 'monospace' }}>
+        <Typography
+          component="span"
+          sx={{ color: theme.palette.text.secondary, fontSize: '0.9rem' }}
+        >
+          drwxr-xr-x
+        </Typography>
+        <Typography
+          component="span"
+          sx={{
+            color: theme.palette.primary.main,
+            fontWeight: 600,
+            fontSize: '0.95rem',
+          }}
+        >
+          {project.name}/
+        </Typography>
+      </Box>
+    </Box>
+  );
+};
+
+const ProjectDetail = ({ project }) => {
+  const theme = useTheme();
+
+  if (!project) {
+    return (
+      <Box sx={{ p: 3, fontFamily: 'monospace', color: theme.palette.text.secondary }}>
+        <Typography>Select a project to view details</Typography>
+      </Box>
+    );
+  }
+
+  return (
+    <Box sx={{ p: 3 }}>
+      <Typography
+        sx={{
+          fontFamily: 'monospace',
+          color: theme.palette.text.secondary,
+          fontSize: '0.85rem',
+          mb: 2,
+        }}
+      >
+        $ cat {project.name}/README.md
       </Typography>
-      <Grid container spacing={4}>
-        {projects.map((project, index) => (
-          <Grid item xs={12} sm={6} md={4} key={index}>
-            <Card>
-              <CardContent>
-                <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, mb: 2 }}>
-                  {project.icon}
-                  <Typography variant="h5">{project.title}</Typography>
-                </Box>
-                <Typography variant="body2" color="text.secondary">
-                  {project.description}
-                </Typography>
-              </CardContent>
-              <CardActions>
-                {Array.isArray(project.link) && project.link.length > 0 ? (
-                  project.link.map((url, i) => (
-                    url && (
-                      <Button
-                        key={i}
-                        size="small"
-                        color={i === 0 ? "primary" : "secondary"}
-                        href={url}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                      >
-                        {i === 0 ? "Learn More" : "Learn More (but even more!)"}
-                      </Button>
-                    )
-                  ))
-                ) : project.link ? (
-                  <Button
-                    size="small"
-                    color="primary"
-                    href={project.link}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    Learn More
-                  </Button>
-                ) : null}
-              </CardActions>
-            </Card>
-          </Grid>
+
+      <Typography
+        variant="h5"
+        sx={{
+          fontFamily: 'monospace',
+          fontWeight: 700,
+          color: theme.palette.primary.main,
+          mb: 2,
+        }}
+      >
+        # {project.name}
+      </Typography>
+
+      <Typography
+        sx={{
+          fontFamily: 'monospace',
+          fontSize: '0.95rem',
+          lineHeight: 1.7,
+          mb: 3,
+        }}
+      >
+        {project.description}
+      </Typography>
+
+      <Stack direction="row" spacing={1} flexWrap="wrap" useFlexGap sx={{ mb: 3 }}>
+        {project.tags.map((tag) => (
+          <Chip
+            key={tag}
+            label={tag}
+            size="small"
+            variant="outlined"
+            sx={{ fontFamily: 'monospace', fontSize: '0.75rem' }}
+          />
         ))}
-      </Grid>
+      </Stack>
+
+      <Box sx={{ display: 'flex', gap: 2, fontFamily: 'monospace' }}>
+        {project.github && (
+          <Box
+            component="a"
+            href={project.github}
+            target="_blank"
+            rel="noopener noreferrer"
+            sx={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: 0.5,
+              color: theme.palette.text.primary,
+              textDecoration: 'none',
+              fontSize: '0.9rem',
+              '&:hover': { color: theme.palette.primary.main },
+            }}
+          >
+            <GitHub fontSize="small" /> repo
+          </Box>
+        )}
+        {project.demo && (
+          <Box
+            component="a"
+            href={project.demo}
+            target="_blank"
+            rel="noopener noreferrer"
+            sx={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: 0.5,
+              color: theme.palette.text.primary,
+              textDecoration: 'none',
+              fontSize: '0.9rem',
+              '&:hover': { color: theme.palette.primary.main },
+            }}
+          >
+            <OpenInNew fontSize="small" /> demo
+          </Box>
+        )}
+      </Box>
+    </Box>
+  );
+};
+
+const Portfolio = () => {
+  const [selectedProject, setSelectedProject] = useState(projects[0]);
+  const theme = useTheme();
+
+  return (
+    <Container maxWidth="lg" sx={{ mt: 4 }}>
+      <Box
+        sx={{
+          mb: 4,
+          p: 2,
+          fontFamily: 'monospace',
+        }}
+      >
+        <Typography
+          sx={{
+            fontFamily: 'monospace',
+            fontSize: '0.9rem',
+            color: theme.palette.text.secondary,
+          }}
+        >
+          $ ls -la ~/projects/
+        </Typography>
+      </Box>
+
+      <Box
+        sx={{
+          display: 'grid',
+          gridTemplateColumns: { xs: '1fr', md: '300px 1fr' },
+          gap: 0,
+          border: `1px solid ${theme.palette.divider}`,
+          borderRadius: 2,
+          overflow: 'hidden',
+          backgroundColor: theme.palette.mode === 'dark' ? '#1a1a2e' : '#f5f5f5',
+        }}
+      >
+        <Box
+          sx={{
+            borderRight: { md: `1px solid ${theme.palette.divider}` },
+            borderBottom: { xs: `1px solid ${theme.palette.divider}`, md: 'none' },
+          }}
+        >
+          <Box
+            sx={{
+              p: 2,
+              borderBottom: `1px solid ${theme.palette.divider}`,
+              fontFamily: 'monospace',
+              fontSize: '0.85rem',
+              color: theme.palette.text.secondary,
+            }}
+          >
+            ~/projects
+          </Box>
+          {projects.map((project) => (
+            <ProjectCard
+              key={project.id}
+              project={project}
+              isSelected={selectedProject?.id === project.id}
+              onClick={() => setSelectedProject(project)}
+            />
+          ))}
+        </Box>
+
+        <Box sx={{ minHeight: 300 }}>
+          <Box
+            sx={{
+              display: 'flex',
+              gap: 1,
+              p: 2,
+              borderBottom: `1px solid ${theme.palette.divider}`,
+            }}
+          >
+            <Box sx={{ width: 12, height: 12, borderRadius: '50%', backgroundColor: '#ff5f56' }} />
+            <Box sx={{ width: 12, height: 12, borderRadius: '50%', backgroundColor: '#ffbd2e' }} />
+            <Box sx={{ width: 12, height: 12, borderRadius: '50%', backgroundColor: '#27ca40' }} />
+          </Box>
+          <ProjectDetail project={selectedProject} />
+        </Box>
+      </Box>
     </Container>
   );
 };

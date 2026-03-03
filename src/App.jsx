@@ -19,7 +19,7 @@ const App = () => {
   return (
     <ThemeProvider theme={isDarkMode ? darkTheme : lightTheme}>
       <CssBaseline />
-      <Router>
+      <Router basename="/portfolio">
         <Box
           sx={{
             display: 'flex',

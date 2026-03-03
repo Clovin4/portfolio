@@ -79,13 +79,14 @@ const TypingLine = ({ line, onComplete, isActive }) => {
 
 const Home = () => {
   const [currentLine, setCurrentLine] = useState(0);
-  const [completedLines, setCompletedLines] = useState([]);
+  const [isTyping, setIsTyping] = useState(true);
   const theme = useTheme();
 
   const handleLineComplete = () => {
-    setCompletedLines((prev) => [...prev, TERMINAL_LINES[currentLine]]);
+    setIsTyping(false);
     setTimeout(() => {
       setCurrentLine((prev) => prev + 1);
+      setIsTyping(true);
     }, 300);
   };
 
@@ -127,7 +128,7 @@ const Home = () => {
         </Box>
 
         <Box sx={{ display: 'flex', flexDirection: 'column', gap: 0.5 }}>
-          {completedLines.map((line, index) => (
+          {TERMINAL_LINES.slice(0, currentLine).map((line, index) => (
             <Box
               key={index}
               component="div"
@@ -143,8 +144,9 @@ const Home = () => {
             </Box>
           ))}
 
-          {currentLine < TERMINAL_LINES.length && (
+          {currentLine < TERMINAL_LINES.length && isTyping && (
             <TypingLine
+              key={currentLine}
               line={TERMINAL_LINES[currentLine]}
               onComplete={handleLineComplete}
               isActive={true}
