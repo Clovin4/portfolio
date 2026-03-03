@@ -1,6 +1,7 @@
 import React from 'react';
 import { Container, Grid, Card, CardContent, CardActions, Button, Typography, Box } from '@mui/material';
 import { Build, BarChart, School, Code, ShowChart, BubbleChart, Timeline } from '@mui/icons-material';
+import AsciiHeader from '../components/ascii/AsciiHeader';
 
 const projects = [
   {
@@ -12,7 +13,7 @@ const projects = [
   {
     title: 'Prefect Deployment on VPS (Digital Ocean)',
     description: `
-      A docker compose deployment with reverse proxy and watchtower. Watchtower is used to update the containers automatically 
+      A docker compose deployment with reverse proxy and watchtower. Watchtower is used to update the containers automatically
       when a new image is available. The reverse proxy is used to route the requests to the correct container based on the domain name.
     `,
     icon: <BubbleChart />,
@@ -34,7 +35,7 @@ const projects = [
     title: 'CI/CD with GitHub Actions',
     description: 'CI/CD workflows with GitHub Actions.',
     icon: <Build />,
-    link: ['https://github.com/Clovin4/quantstream/tree/main/.github', 'https://github.com/Clovin4/qv-terraform/tree/main/.github/workflows'] // An example with two links; update the URLs as needed.
+    link: ['https://github.com/Clovin4/quantstream/tree/main/.github', 'https://github.com/Clovin4/qv-terraform/tree/main/.github/workflows']
   },
   {
     title: 'Docker for Data Science',
@@ -59,11 +60,9 @@ const projects = [
 const Portfolio = () => {
   return (
     <Container maxWidth="lg" sx={{ marginTop: 4 }}>
-      <Typography variant="h3" gutterBottom textAlign="center">
-        Portfolio 📔
-      </Typography>
+      <AsciiHeader title="Portfolio" />
       <Typography variant="body1" paragraph textAlign="center">
-        Warning ⚠️: Some projects (and this page for that matter) are still in development. Stay tuned for updates!
+        Warning: Some projects (and this page for that matter) are still in development. Stay tuned for updates!
       </Typography>
       <Grid container spacing={4}>
         {projects.map((project, index) => (

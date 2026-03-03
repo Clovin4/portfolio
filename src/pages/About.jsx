@@ -1,27 +1,60 @@
 import React from 'react';
-import { Container, Typography, Box } from '@mui/material';
+import { Container, Typography, Box, Chip, Stack } from '@mui/material';
+import AsciiHeader from '../components/ascii/AsciiHeader';
 
 const About = () => {
+  const skills = [
+    'Python',
+    'AWS',
+    'Airflow',
+    'Docker',
+    'Terraform',
+    'PostgreSQL',
+    'Snowflake',
+    'Grafana',
+  ];
+
   return (
     <Container maxWidth="lg" sx={{ marginTop: 4 }}>
-      <Typography variant="h3" gutterBottom textAlign="center">
-        About Me 👋
-      </Typography>
+      <AsciiHeader title="About" />
       <Box sx={{ marginTop: 2 }}>
         <Typography variant="body1" paragraph>
-          Hello! I'm Christian Loving, a passionate software engineer and data scientist with a love for solving complex problems.
-          My expertise spans across machine learning, quantitative finance, and full-stack development.
+          I'm a Software Engineer at Xylem, where I design and build data infrastructure
+          that powers IoT analytics and ML workflows. My work spans auto-scaling ETL architectures,
+          real-time sensor data pipelines, and production ML deployments.
         </Typography>
         <Typography variant="body1" paragraph>
-          Over the years, I've worked on projects ranging from financial modeling platforms to CI/CD automation workflows. 
-          My goal is to combine technology and creativity to build innovative solutions that make a positive impact.
+          I'm passionate about building systems that just work—reliable data pipelines,
+          clean abstractions, and tooling that makes teams more productive. I've reduced
+          pipeline failures by 75%, cut development time from days to hours with custom SDKs,
+          and deployed ML models that actively prevent infrastructure failures.
         </Typography>
         <Typography variant="body1" paragraph>
-          When I'm not coding, you can find me exploring new technologies, writing research papers on quantitative finance, or contributing to open-source projects.
+          Before Xylem, I worked as a Water Resource Engineer at C.H. Fenstermaker, where I
+          discovered my love for automation by building ETL pipelines that replaced manual
+          data workflows. That experience led me to pivot fully into software engineering.
         </Typography>
         <Typography variant="body1" paragraph>
-          If you'd like to collaborate or learn more about my work, feel free to reach out through the <strong>Contact</strong> page or connect with me on LinkedIn.
+          I hold a Master's in Engineering from the University of New Orleans and a Bachelor's
+          from LSU. I'm also an AWS Certified Solutions Architect.
         </Typography>
+
+        <Box sx={{ mt: 4 }}>
+          <Typography variant="h6" gutterBottom sx={{ fontFamily: 'monospace' }}>
+            Tech I work with:
+          </Typography>
+          <Stack direction="row" spacing={1} flexWrap="wrap" useFlexGap>
+            {skills.map((skill) => (
+              <Chip
+                key={skill}
+                label={skill}
+                variant="outlined"
+                size="small"
+                sx={{ fontFamily: 'monospace' }}
+              />
+            ))}
+          </Stack>
+        </Box>
       </Box>
     </Container>
   );
